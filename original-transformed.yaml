@@ -14,6 +14,7 @@ spec:
         {{- include "api.labels" . | nindent 8 }}
   backendType: secretsManager
   data:
-    - key: {{ .Values.secrets }}
-      name: jwt-secret
-      property: jwt-secret
+    - secretKey: jwt-secret
+      remoteRef:
+        key: {{ .Values.secrets }}
+        property: jwt-secret

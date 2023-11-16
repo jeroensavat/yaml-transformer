@@ -30,7 +30,7 @@ module.exports = function transformData(yamlString) {
   yamlString = yamlString.replace(/spec:.+?data:/gs, `${newSpecSection}  data:`);
 
   // Transform data entries
-  const dataRegex = /- key: ([^\n]+)\n\s+name: (\S+)\n\s+property: (\S+)/g;
+  const dataRegex = /- key: ([^\n]+)\n\s+name: ([^\n]+)\n\s+property: ([^\n]+)/g;
   yamlString = yamlString.replace(dataRegex, `- secretKey: $2\n      remoteRef:\n        key: $1\n        property: $3`);
 
   // Separate regex to remove the entire template section under spec
