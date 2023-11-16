@@ -1,0 +1,21 @@
+apiVersion: "external-secrets.io/v1beta1"
+kind: ExternalSecret
+metadata:
+  name: argo-workflows-sso
+  labels:
+    app.kubernetes.io/name: argo-workflows-sso
+    app.kubernetes.io/part-of: argo-workflows
+spec:
+  refreshInterval: 30s
+  secretStoreRef:
+    name: aws
+    kind: ClusterSecretStore
+  data:
+    - secretKey: client-id
+      remoteRef:
+        key: lec-{{ .Values.environment }}/argocd/argocd-server-config
+        property: workflows.sso.client.id
+    - secretKey: client-secret
+      remoteRef:
+        key: lec-{{ .Values.environment }}/argocd/argocd-server-config
+        property: workflows.sso.client.secret

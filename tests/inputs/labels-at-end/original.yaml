@@ -1,0 +1,21 @@
+kind: ExternalSecret
+metadata:
+  name: {{ include "api.name" . }}-external-secret
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "api.labels" . | nindent 4 }}
+spec:
+  backendType: secretsManager
+  data:
+    - key: {{ .Values.secrets }}
+      name: jwt-secret
+      property: jwt-secret
+  template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: argocd
+          app.kubernetes.io/instance: argocd
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: argocd-secret
+          app.kubernetes.io/part-of: argocd
+          argocd.argoproj.io/instance: argocd     

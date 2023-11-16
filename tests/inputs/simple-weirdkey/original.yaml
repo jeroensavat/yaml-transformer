@@ -1,0 +1,17 @@
+apiVersion: "kubernetes-client.io/v1"
+kind: ExternalSecret
+metadata:
+  name: {{ include "api.name" . }}-external-secret
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "api.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "api.labels" . | nindent 8 }}
+  backendType: secretsManager
+  data:
+    - key: {{ .Values.secrets.path }}/notification-api/config
+      name: mongo-uri
+      property: commands_mongo_uri

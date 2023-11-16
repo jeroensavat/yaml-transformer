@@ -1,0 +1,22 @@
+kind: ExternalSecret
+metadata:
+  name: {{ include "api.name" . }}-external-secret
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "api.labels" . | nindent 4 }}
+spec:
+  refreshInterval: 30s
+  secretStoreRef:
+    name: aws
+    kind: ClusterSecretStore
+  target:
+    name: {{ include "api.name" . }}-external-secret
+    template:
+      metadata:
+        labels:
+            {{- include "api.labels" . | nindent 12 }}
+  data:
+    - secretKey: jwt-secret
+      remoteRef:
+        key: {{ .Values.secrets }}
+        property: jwt-secret

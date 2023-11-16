@@ -1,0 +1,16 @@
+apiVersion: "kubernetes-client.io/v1"
+kind: ExternalSecret
+metadata:
+  name: argo-workflows-sso
+  labels:
+    app.kubernetes.io/name: argo-workflows-sso
+    app.kubernetes.io/part-of: argo-workflows
+spec:
+  backendType: secretsManager
+  data:
+    - key: lec-{{ .Values.environment }}/argocd/argocd-server-config
+      name: client-id
+      property: workflows.sso.client.id
+    - key: lec-{{ .Values.environment }}/argocd/argocd-server-config
+      name: client-secret
+      property: workflows.sso.client.secret

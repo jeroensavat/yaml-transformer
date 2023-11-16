@@ -1,0 +1,16 @@
+kind: ExternalSecret
+metadata:
+  name: {{ include "api.name" . }}-external-secret
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "api.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "api.labels" . | nindent 8 }}
+  backendType: secretsManager
+  data:
+    - key: {{ .Values.secrets }}
+      name: jwt-secret
+      property: jwt-secret
